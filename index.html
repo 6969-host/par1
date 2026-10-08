@@ -353,8 +353,21 @@ input::placeholder,textarea::placeholder{color:rgba(169,154,162,.6)}
 .cursor.big span{opacity:1}
 @media (hover:none),(pointer:coarse){.cursor{display:none}}
 
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);background:var(--screen);color:var(--ink);padding:12px 20px;border-radius:999px;font-size:14px;font-weight:600;z-index:95;transition:transform .45s var(--ease-out)}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);background:var(--screen);color:var(--ink);padding:12px 20px;border-radius:999px;font-size:14px;font-weight:600;z-index:95;transition:transform .45s var(--ease-out)}
 .toast.on{transform:translate(-50%,0)}
+
+/* WhatsApp float */
+.wa{position:fixed;right:max(var(--gutter),env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:55;display:flex;align-items:center;gap:0;height:58px;padding:0;border-radius:999px;background:#1FAF5A;color:#fff;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:translateY(140%) scale(.6);opacity:0;transition:transform .8s var(--ease-out),opacity .5s,gap .5s var(--ease),background .3s}
+.wa.in{transform:none;opacity:1}
+.wa .ic{width:58px;height:58px;display:grid;place-items:center;flex:none;position:relative}
+.wa .ic svg{width:28px;height:28px}
+.wa .ic::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #1FAF5A;animation:waPing 2.6s var(--ease-out) infinite}
+@keyframes waPing{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(1.7);opacity:0}}
+.wa .lb{max-width:0;overflow:hidden;white-space:nowrap;font-weight:600;font-size:15px;transition:max-width .6s var(--ease),padding .6s var(--ease)}
+.wa:hover,.wa:focus-visible{background:#189A4E}
+.wa:hover .lb,.wa:focus-visible .lb{max-width:220px;padding-right:22px}
+body.menu-open .wa{opacity:0;pointer-events:none}
+@media (max-width:560px){.wa{height:54px}.wa .ic{width:54px;height:54px}}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -376,6 +389,10 @@ input::placeholder,textarea::placeholder{color:rgba(169,154,162,.6)}
 </div>
 
 <div class="cursor" id="cursor"><span id="cursorText">View</span></div>
+<a class="wa" id="wa" href="https://wa.me/916238366969?text=Hi%20Parable%20Media%2C%20I%27d%20like%20to%20talk%20about%20a%20video%20for%20my%20business." target="_blank" rel="noopener" aria-label="Chat with Parable Media on WhatsApp, +91 62383 66969">
+  <span class="ic" aria-hidden="true"><svg viewBox="0 0 28 28" fill="none"><path d="M14 3.5C8.2 3.5 3.5 8 3.5 13.6c0 2 .6 3.8 1.6 5.4L3.8 24.3l5.5-1.4c1.4.7 3 1.1 4.7 1.1 5.8 0 10.5-4.5 10.5-10.2S19.8 3.5 14 3.5z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M10.2 9.4c.3-.3.8-.3 1 .1l.9 1.9c.1.3.1.6-.1.8l-.6.7c.6 1.3 1.6 2.3 2.9 2.9l.7-.6c.2-.2.5-.3.8-.1l1.9.9c.4.2.4.7.1 1l-.6.7c-.5.5-1.2.7-1.9.5-2.8-.8-5-3-5.8-5.8-.2-.7 0-1.4.5-1.9z" fill="#fff"/></svg></span>
+  <span class="lb">WhatsApp us</span>
+</a>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <header class="bar" id="bar">
@@ -551,7 +568,7 @@ input::placeholder,textarea::placeholder{color:rgba(169,154,162,.6)}
     <div class="contact-info">
       <div class="item" data-fade><small>Reply time</small>Within two working days</div>
       <div class="item" data-fade><small>Now booking</small>Short-form films, brand films and monthly content</div>
-      <div class="item" data-fade><small>What to send</small>Your business, your customers and what you want them to feel</div>
+      <div class="item" data-fade><small>WhatsApp</small><a href="https://wa.me/916238366969" target="_blank" rel="noopener">+91 62383 66969</a></div>
       <div class="item" data-fade><small>Follow</small><div class="row-gap"><a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a></div></div>
     </div>
   </div>
@@ -734,7 +751,7 @@ document.getElementById('copyEmail').addEventListener('click',()=>{const el=docu
   document.body.classList.add('locked');let done=false;const t0=performance.now();
   (function tick(n){if(done)return;tcEl.textContent=tc24((n-t0)/1000);requestAnimationFrame(tick)})(t0);
   let started=false;function start(){if(started)return;started=true;animatePage(document.getElementById('main'))}
-  function reveal(){document.body.classList.remove('locked');lenis&&lenis.start();loader.remove();start();const h=location.hash.slice(1);if(h&&document.getElementById(h)&&h!=='top')setTimeout(()=>goTo(h,true),50)}
+  function reveal(){document.body.classList.remove('locked');setTimeout(()=>document.getElementById('wa').classList.add('in'),600);lenis&&lenis.start();loader.remove();start();const h=location.hash.slice(1);if(h&&document.getElementById(h)&&h!=='top')setTimeout(()=>goTo(h,true),50)}
   if(!G){let p=0;const iv=setInterval(()=>{p=Math.min(100,p+7);count.textContent=String(p).padStart(3,'0');if(p>=100){clearInterval(iv);done=true;loader.style.transition='opacity .4s';loader.style.opacity=0;setTimeout(reveal,400)}},40);
     document.getElementById('skip').onclick=()=>{clearInterval(iv);done=true;reveal()};return}
   const chars=loader.querySelectorAll('#ldWord .ch'),obj={v:0};
